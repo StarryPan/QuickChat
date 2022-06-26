@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+  Options +FollowSymlinks -Multiviews
+  RewriteEngine On
+
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ index.html/$1 [QSA,PT,L]
+</IfModule> 
+<IfModule mod_headers.c>
+  Header add Access-Control-Allow-Origin: *
+  Header add Access-Control-Allow-Methods: *
+  Header add Access-Control-Allow-Headers: Userid
+  Header add Access-Control-Allow-Headers: Usertoken
+</IfModule>

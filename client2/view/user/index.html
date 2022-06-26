@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>修改信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <style>
+        html,
+        body {
+            background: #ffffff;
+        }
+
+        .layui-table-cell {
+            height: 100% !important;
+            /* line-height: 28px; */
+            padding: 0 15px;
+            position: relative;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+
+            <form class="layui-form layuimini-form">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">ID</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" class="layui-input" readonly :value="info.id">
+                        <tip>唯一ID</tip>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" class="layui-input" v-bind:value="info.name">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">头像</label>
+                    <div class="layui-input-block layuimini-upload">
+                        <input name="head" class="layui-input layui-col-xs6" lay-verify="required" lay-reqtext="请上传图片"
+                            placeholder="请上传图片" value="">
+                        <div class="layuimini-upload-btn">
+                            <span><a class="layui-btn" data-upload="head" data-upload-number="one"
+                                    data-upload-exts="png|jpg|ico|jpeg"><i class="fa fa-upload"></i> 上传图片</a></span>
+                            <span><a class="layui-btn layui-btn-normal" id="select_head" data-upload-select="head"
+                                    data-upload-number="one"><i class="fa fa-list"></i> 选择图片</a></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">性别</label>
+                    <div class="layui-input-block">
+                        <select name="sex">
+                            <template v-for="(val, idx) in sex_list">
+                                <option v-if="idx == info.sex" selected="selected" v-bind:value="idx">{{val}}</option>
+                                <option v-else v-bind:value="idx">{{val}}</option>
+                            </template>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">备注信息</label>
+                    <div class="layui-input-block">
+                        <textarea name="remark" class="layui-textarea"
+                            placeholder="请输入备注信息">{{info.remark}}</textarea>
+                    </div>
+                </div>
+
+                <div class="hr-line"></div>
+                <div class="layui-form-item text-center">
+                    <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit=""
+                        lay-filter="save">确认</button>
+                    <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script src="../../plugs/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="../../plugs/fast-main/fast-main.js" charset="utf-8"></script>
+    <script src="../../plugs/layui-v2.5.6/layui.js" charset="utf-8"></script>
+    <script src="../../plugs/vue-2.6.10/vue.min.js" charset="utf-8"></script>
+    <script>
+        // 全局的变量
+        var form, layer, _index;
+
+        /*初始化vue*/
+        var user_vue = new Vue({
+            el: '.layuimini-main',
+            data: {
+                info: {},
+                head: '',
+                sex_list: {
+                    0: '保密',
+                    1: '男生',
+                    2: '女生',
+                },
+                head_list: [],
+                prefix_scr: '../../images/heads/',
+            },
+            methods: {
+                url: function (url) {
+                    return this.prefix_scr + url;
+                },
+                initHeads: function (num) {
+
+                    let suffix = '.jpg';
+                    let head_name = 'head';
+
+                    for (let i = 1; i <= num; i++) {
+
+                        let head = head_name + i + suffix;
+                        user_vue.head_list.push(head);
+                    }
+                },
+            }
+        });
+
+        layui.config({
+            base: '../../plugs/lay-module/',// 第三方模块所在目录
+            version: 'v1.1.0' // 插件版本号
+        }).extend({
+            tableSelect: 'tableSelect/tableSelect',  // 插件
+        });
+
+        // 调用Layui
+        layui.use(['layer', 'form', 'upload', 'tableSelect'], function () {
+            form = layui.form,
+                layer = layui.layer,
+                upload = layui.upload,
+                tableSelect = layui.tableSelect;
+
+            // 传入Layui
+            main.modules.layui = layui;
+
+            // 调用父级的main
+            let parent_main = parent.main;
+
+            // 设置基础数据
+            user_vue.info = parent.getUserInfo();
+            user_vue.head = user_vue.info.head;
+
+            // 监听选择框
+            form.on('select(update_head)', function (obj) {
+
+                if (obj.value == '' || obj.value == 0) return false;
+
+                // 提前记录下来数据
+                user_vue.info.name = $('[name=name]').val();
+                user_vue.info.remark = $('[name=remark]').val();
+
+                user_vue.head = obj.value;
+
+                return false;
+            });
+
+            // 监听发送按钮
+            form.on('submit(save)', function (data) {
+
+                // 表单数据
+                var dataField = data.field;
+
+                // Loading层
+                _index = main.layui.loading();
+
+                // 发送，修改玩家信息
+                parent_main.ws.send('updateUser', dataField);
+
+                return false;
+            });
+
+            var uploadSelectList = document.querySelectorAll("[data-upload-select]");
+
+            if (uploadSelectList.length > 0) {
+                $.each(uploadSelectList, function (i, v) {
+                    var exts = $(this).attr('data-upload-exts'),
+                        uploadName = $(this).attr('data-upload-select'),
+                        uploadNumber = $(this).attr('data-upload-number'),
+                        uploadSign = $(this).attr('data-upload-sign');
+                    exts = exts || init.upload_exts;
+                    uploadNumber = uploadNumber || 'one';
+                    uploadSign = uploadSign || '|';
+                    var selectCheck = uploadNumber === 'one' ? 'radio' : 'checkbox';
+                    var elem = "input[name='" + uploadName + "']",
+                        uploadElem = $(this).attr('id');
+
+                    tableSelect.render({
+                        elem: "#" + uploadElem,
+                        checkedKey: 'id',
+                        searchType: 'more',
+                        searchList: [
+                            { searchKey: 'title', searchPlaceholder: '请输入文件名' },
+                        ],
+                        table: {
+                            url: parent_main.url.cdnUrl('getUploadHeards'),
+                            cols: [[
+                                { type: selectCheck, width: 50 },
+                                { field: 'url', imageWidth: 80, search: false, title: '图片信息', imageHeight: 80, align: "center", templet: main.layui.table.image },
+                                { field: 'create_time', width: 200, title: '创建时间', align: "center", search: 'range' },
+                            ]]
+                        },
+                        done: function (e, data) {
+                            var urlArray = [];
+                            $.each(data.data, function (index, val) {
+                                urlArray.push(val.url)
+                            });
+                            var url = urlArray.join(uploadSign);
+                            main.layui.success('选择成功', function () {
+                                $(elem).val(url);
+                                $(elem).trigger("input");
+                            });
+                        }
+                    })
+
+                });
+
+            }
+
+            // 初始化头像
+            user_vue.initHeads(20);
+
+            main.config = parent_main.config;
+            main.click.upload();
+
+            // 延时执行
+            setTimeout(() => {
+
+                // 初始化layui表单
+                form.render();
+            }, 100);
+        });
+
+        // 关闭界面
+        function closeFrame() {
+
+            layer.close(_index);
+
+            main.layui.success('修改成功', function () {
+
+                // 获取当前窗口的name
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+        }
+    </script>
+</body>
+
+</html>

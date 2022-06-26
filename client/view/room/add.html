@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>创建房间</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../css/index.css" media="all">
+    <link rel="stylesheet" href="../../plugs/lay-module/layuimini/themes/default.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <style>
+        html,
+        body {
+            background: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="layuimini-container">
+        <form id="app-form" class="layui-form layuimini-form">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" class="layui-input" lay-verify="required" lay-reqtext="房间名称不能为空。"
+                        placeholder="请输入房间名称" value="">
+                    <tip>请填写房间唯一名称。</tip>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">人数</label>
+                <div class="layui-input-block">
+                    <input type="number" name="limit_players" class="layui-input" lay-verify="required"
+                        lay-reqtext="房间人数不能为空。" placeholder="请输入房间最大人数" value="100">
+                    <tip>请配置房间最大人数</tip>
+                </div>
+            </div>
+
+            <div class="hr-line"></div>
+            <div class="layui-form-item text-center">
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit=""
+                    lay-filter="add">确认</button>
+                <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+            </div>
+
+        </form>
+    </div>
+
+    <script src="../../plugs/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="../../plugs/fast-main/fast-main.js" charset="utf-8"></script>
+    <script src="../../plugs/layui-v2.5.6/layui.js" charset="utf-8"></script>
+    <script>
+        // 定义全局变量
+        var form, layer, _index;
+
+        // 等页面加载完毕后执行
+        $(document).ready(function () {
+
+            layui.use(['layer', 'form', 'slider'], function () {
+                form = layui.form,
+                layer = layui.layer;
+
+                // 调用父级的main
+                let parent_main = parent.main;
+
+                // 传入Layui
+                main.modules.layui = layui;
+
+                form.on('submit(add)', function (data) {
+
+                    var dataField = data.field;
+
+                    // Loading
+                    _index = main.layui.loading();
+
+                    // 发送创建房间命令
+                    parent_main.ws.send('createRoom', dataField);
+                    return false;
+                });
+            });
+        });
+
+        // 关闭界面，父级回调
+        function closeAddFrame() {
+
+            // 关闭loading
+            layer.close(_index);
+
+            // 提示
+            main.layui.success('添加成功', function () {
+
+                // 获取当前窗口的name
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+        }
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>创建房间</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- <link rel="stylesheet" href="../../css/public.css" media="all"> -->
+
+    <link rel="stylesheet" href="../../plugs/quickchat-v1.0.0/css/normalize.min.css" media="all">
+    <link rel="stylesheet" href="../../plugs/quickchat-v1.0.0/css/style.css" media="all">
+    <style>
+        html,
+        body {
+            background: #ffffff;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body data-theme="indigo">
+
+    <div class="app-container hide">
+        <div class="app-main">
+            <div class="chat-wrapper">
+
+                <!-- 初始消息提示 -->
+                <div class="message-wrapper">
+                    <div class="message-box-wrapper" style="margin: auto;opacity: 0.5;">
+                        <div class="message-box">
+                            你已进入 {{room_info.name}}，现在可以开始聊天了。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 主消息样式 -->
+                <div :class="reverse(val)" v-for="( val, idx ) in mess_list">
+                    <img :class="imgClass(val)" :src="url(val.head_img)" alt="profile-pic" :title="val.online ? '在线': '离线'">
+                    <div class="message-box-wrapper">
+                        <div class="message-name">{{getName(val)}}</div>
+                        <div class="message-box">
+                            {{val.content}}
+                        </div>
+                        <span>{{getDateDiff(val.time)}}</span>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="chat-input-wrapper">
+
+                <button class="chat-attachment-btn">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2" class="feather feather-paperclip" viewBox="0 0 24 24">
+                        <defs></defs>
+                        <path
+                            d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48">
+                        </path>
+                    </svg>
+                </button>
+
+                <div class="input-wrapper">
+                    <textarea class="chat-input" name="mess" placeholder="在这里输入您的信息"></textarea>
+                    <!-- <input type="text" class="chat-input" placeholder="Enter your message here"> -->
+                    <button class="emoji-btn">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" class="feather feather-smile" viewBox="0 0 24 24">
+                            <defs></defs>
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <button class="chat-send-btn" lay-submit="" lay-filter="send">发送</button>
+
+            </div>
+
+        </div>
+
+        <div class="app-right-bottom" style="display: none;">
+            <div class="app-theme-selector">
+                <button class="theme-color indigo" data-color="indigo">
+                    <svg width="512" height="512" viewBox="0 0 512 512" title="Indigo">
+                        <defs></defs>
+                        <path fill="#fff"
+                            d="M451.648.356c-25.777 2.712-56.79 19.872-94.811 52.46-68.786 58.958-149.927 160.756-202.185 234-38.158-5.951-78.375 10.368-102.187 40.133C8.758 381.584 45.347 430.34 4.12 473.811c-7.179 7.569-4.618 20.005 4.98 24.114 67.447 28.876 153.664 10.879 194.109-31.768 24.718-26.063 38.167-64.54 31.411-100.762 72.281-55.462 172.147-140.956 228.7-211.885 31.316-39.277 47.208-70.872 48.584-96.59C513.759 22.273 486.87-3.346 451.648.356zM181.443 445.511c-27.362 28.85-87.899 45.654-141.767 31.287 30.12-48.043 4.229-91.124 36.214-131.106 26.246-32.808 79.034-41.993 109.709-11.317 35.839 35.843 19.145 86.566-4.156 111.136zm3.07-148.841c7.354-10.167 18.887-25.865 33.29-44.659l49.22 49.224c-18.125 14.906-33.263 26.86-43.077 34.494-8.842-15.879-22.526-30.108-39.433-39.059zM481.948 55.316c-3.368 63.004-143.842 186.021-191.797 226.621l-53.785-53.79c39.458-49.96 155.261-191.312 218.422-197.954 16.851-1.775 28.03 8.858 27.16 25.123z">
+                        </path>
+                    </svg>
+                </button>
+                <button class="theme-color pink" data-color="pink" title="Pink">
+                    <svg width="512" height="512" viewBox="0 0 512 512">
+                        <defs></defs>
+                        <path fill="#fff"
+                            d="M451.648.356c-25.777 2.712-56.79 19.872-94.811 52.46-68.786 58.958-149.927 160.756-202.185 234-38.158-5.951-78.375 10.368-102.187 40.133C8.758 381.584 45.347 430.34 4.12 473.811c-7.179 7.569-4.618 20.005 4.98 24.114 67.447 28.876 153.664 10.879 194.109-31.768 24.718-26.063 38.167-64.54 31.411-100.762 72.281-55.462 172.147-140.956 228.7-211.885 31.316-39.277 47.208-70.872 48.584-96.59C513.759 22.273 486.87-3.346 451.648.356zM181.443 445.511c-27.362 28.85-87.899 45.654-141.767 31.287 30.12-48.043 4.229-91.124 36.214-131.106 26.246-32.808 79.034-41.993 109.709-11.317 35.839 35.843 19.145 86.566-4.156 111.136zm3.07-148.841c7.354-10.167 18.887-25.865 33.29-44.659l49.22 49.224c-18.125 14.906-33.263 26.86-43.077 34.494-8.842-15.879-22.526-30.108-39.433-39.059zM481.948 55.316c-3.368 63.004-143.842 186.021-191.797 226.621l-53.785-53.79c39.458-49.96 155.261-191.312 218.422-197.954 16.851-1.775 28.03 8.858 27.16 25.123z">
+                        </path>
+                    </svg>
+                </button>
+                <button class="theme-color navy-dark active" data-color="navy-dark" title="Navy Dark">
+                    <svg width="512" height="512" viewBox="0 0 512 512">
+                        <defs></defs>
+                        <path fill="#fff"
+                            d="M451.648.356c-25.777 2.712-56.79 19.872-94.811 52.46-68.786 58.958-149.927 160.756-202.185 234-38.158-5.951-78.375 10.368-102.187 40.133C8.758 381.584 45.347 430.34 4.12 473.811c-7.179 7.569-4.618 20.005 4.98 24.114 67.447 28.876 153.664 10.879 194.109-31.768 24.718-26.063 38.167-64.54 31.411-100.762 72.281-55.462 172.147-140.956 228.7-211.885 31.316-39.277 47.208-70.872 48.584-96.59C513.759 22.273 486.87-3.346 451.648.356zM181.443 445.511c-27.362 28.85-87.899 45.654-141.767 31.287 30.12-48.043 4.229-91.124 36.214-131.106 26.246-32.808 79.034-41.993 109.709-11.317 35.839 35.843 19.145 86.566-4.156 111.136zm3.07-148.841c7.354-10.167 18.887-25.865 33.29-44.659l49.22 49.224c-18.125 14.906-33.263 26.86-43.077 34.494-8.842-15.879-22.526-30.108-39.433-39.059zM481.948 55.316c-3.368 63.004-143.842 186.021-191.797 226.621l-53.785-53.79c39.458-49.96 155.261-191.312 218.422-197.954 16.851-1.775 28.03 8.858 27.16 25.123z">
+                        </path>
+                    </svg>
+                </button>
+                <button class="theme-color dark" data-color="dark" title="Dark">
+                    <svg width="512" height="512" viewBox="0 0 512 512">
+                        <defs></defs>
+                        <path fill="currentColor"
+                            d="M451.648.356c-25.777 2.712-56.79 19.872-94.811 52.46-68.786 58.958-149.927 160.756-202.185 234-38.158-5.951-78.375 10.368-102.187 40.133C8.758 381.584 45.347 430.34 4.12 473.811c-7.179 7.569-4.618 20.005 4.98 24.114 67.447 28.876 153.664 10.879 194.109-31.768 24.718-26.063 38.167-64.54 31.411-100.762 72.281-55.462 172.147-140.956 228.7-211.885 31.316-39.277 47.208-70.872 48.584-96.59C513.759 22.273 486.87-3.346 451.648.356zM181.443 445.511c-27.362 28.85-87.899 45.654-141.767 31.287 30.12-48.043 4.229-91.124 36.214-131.106 26.246-32.808 79.034-41.993 109.709-11.317 35.839 35.843 19.145 86.566-4.156 111.136zm3.07-148.841c7.354-10.167 18.887-25.865 33.29-44.659l49.22 49.224c-18.125 14.906-33.263 26.86-43.077 34.494-8.842-15.879-22.526-30.108-39.433-39.059zM481.948 55.316c-3.368 63.004-143.842 186.021-191.797 226.621l-53.785-53.79c39.458-49.96 155.261-191.312 218.422-197.954 16.851-1.775 28.03 8.858 27.16 25.123z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="../../plugs/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="../../plugs/fast-main/fast-main.js" charset="utf-8"></script>
+    <script src="../../plugs/layui-v2.5.6/layui.js" charset="utf-8"></script>
+    <script src="../../plugs/vue-2.6.10/vue.min.js" charset="utf-8"></script>
+    <script>
+        var _index,
+            layer;
+
+        // 等页面加载完毕后执行
+
+        // 调用父级的main
+        let parent_main = parent.main;
+
+        /*初始化vue*/
+        var mess_vue = new Vue({
+            el: '.app-container',
+            data: {
+                uid: '',
+                mess_list: [],
+                room_info: [],
+                prefix_scr: '../../images/heads/',
+            },
+            methods: {
+                url: function (url) {
+                    return this.prefix_scr + url;
+                },
+                reverse: function (val) {
+
+                    return (this.uid == val.uid) ? 'message-wrapper reverse' : 'message-wrapper';
+                },
+                imgClass: function (val) {
+
+                    return (val.online) ? 'message-pp' : 'message-pp gray';
+                },
+                getName: function (val) {
+                    
+                    return val.name || val.uid;
+                },
+                getDateDiff: function (time, type) {
+                    var minute = 1000 * 60;
+                    var hour = minute * 60;
+                    var day = hour * 24;
+                    var halfamonth = day * 15;
+                    var month = day * 30;
+                    var now = new Date().getTime();
+                    var diffValue = now - time;
+                    if (diffValue < 0) {
+                        return;
+                    }
+
+                    var monthC = diffValue / month;
+                    var weekC = diffValue / (7 * day);
+                    var dayC = diffValue / day;
+                    var hourC = diffValue / hour;
+                    var minC = diffValue / minute;
+                    if (monthC >= 1) {
+                        result = "" + parseInt(monthC) + "个月前";
+                    } else if (weekC >= 1) {
+                        result = "" + parseInt(weekC) + "周前";
+                    } else if (dayC >= 1) {
+                        result = "" + parseInt(dayC) + "天前";
+                    } else if (hourC >= 1) {
+                        result = "" + parseInt(hourC) + "后小时前";
+                    } else if (minC >= 1) {
+                        result = "" + parseInt(minC) + "分钟前";
+                    } else
+                        result = "刚刚";
+                    return result;
+                },
+            }
+        });
+
+        // 调用Layui
+        layui.use(['layer', 'form'], function () {
+            form = layui.form,
+                layer = layui.layer;
+
+            // 传入Layui
+            main.modules.layui = layui;
+
+            // Loading层
+            _index = main.layui.loading();
+
+            // 获取房间ID
+            var room_id = main.api.getQueryVariable('id');
+
+            if (!room_id) {
+
+                return main.layui.error('获取房间ID失败');
+            }
+
+            // 初始化数据
+            mess_vue.uid       = parent_main.api.getQueryVariable('token');
+            mess_vue.room_info = parent_main.model.getRommWithId(room_id);
+
+            // 发送，拉取房间消息
+            parent_main.ws.send('joinRoom', mess_vue.room_info.id);
+
+            // 监听发送按钮
+            form.on('submit(send)', function (data) {
+
+                // 获取输入框里的内容
+                let mess_obj = $('[name=mess]');
+
+                // 发送，拉取房间消息
+                parent_main.ws.send('sendMessage', {
+                    room_id: mess_vue.room_info.id,
+                    content: mess_obj.val()
+                });
+
+                // 清空输入框
+                mess_obj.val('');
+            });
+
+            setTimeout(() => {
+                
+                $('.app-container').removeClass('hide');
+            }, 500);
+        });
+
+        // 子消息界面，初始化消息
+        function initMessage(data) {
+            
+            // 设置数据到Vue消息数据
+            mess_vue.mess_list = data;
+
+            // 延时调用，给vue加载时间
+            setTimeout(() => {
+                // 回滚到最下方
+                $(".chat-wrapper").scrollTop($(".chat-wrapper")[0].scrollHeight);
+                
+                // 关闭Loading弹窗
+                layer.close(_index);
+            }, 500);
+
+            console.log('', data);
+        }
+
+        //  子消息界面，接收消息
+        function receiveMessage(data) {
+
+            // 设置数据到Vue消息数据
+            mess_vue.mess_list.push(data);
+
+            // 延时调用，给vue加载时间
+            setTimeout(() => {
+                // 回滚到最下方
+                $(".chat-wrapper").scrollTop($(".chat-wrapper")[0].scrollHeight);
+            }, 10);
+        }
+    </script>
+</body>
+
+</html>

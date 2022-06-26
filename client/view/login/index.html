@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>多人在线聊天【登陆】</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <link rel="stylesheet" href="../../css/login.css" media="all">
+
+    <script>
+        window.CONFIG = {
+            ADMIN: "index",
+            CONTROLLER_JS_PATH: "",
+            ACTION: "",
+            AUTOLOAD_JS: "",
+            IS_SUPER_ADMIN: "false",
+            VERSION: "1.0.0",
+        };
+    </script>
+    <script src="../../plugs/layui-v2.5.6/layui.all.js" charset="utf-8"></script>
+</head>
+<body>
+    <div class="main-body">
+        <div class="login-main">
+            <div class="login-top">
+                <span>多人在线聊天</span>
+                <span class="bg1"></span>
+                <span class="bg2"></span>
+            </div>
+            <form class="layui-form login-bottom">
+                <div class="center">
+
+                    <div class="item">
+                        <span class="icon icon-2"></span>
+                        <input type="text" name="username" lay-verify="required" placeholder="请输入登录账号" maxlength="24" />
+                    </div>
+
+                    <div class="item">
+                        <span class="icon icon-3"></span>
+                        <input type="password" name="password" lay-verify="required" placeholder="请输入密码" maxlength="20">
+                        <span class="bind-password icon icon-4"></span>
+                    </div>
+                </div>
+                
+                <div class="layui-form-item" style="text-align:center; width:100%;height:100%;margin:0px;">
+                    <button class="login-btn" lay-submit>立即登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

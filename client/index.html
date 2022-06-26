@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>多人在线聊天【客户端】</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="./css/index.css" media="all">
+    <link rel="stylesheet" href="./css/public.css" media="all">
+    <link rel="stylesheet" href="./plugs/lay-module/layuimini/themes/default.css" media="all">
+</head>
+
+<body>
+    <div class="layui-layout layui-layout-admin">
+
+        <div class="layui-header header">
+            <ul class="layui-nav" lay-bar="disabled" lay-filter="demo">
+                <li class="layui-nav-item layui-this">
+                    <a href="index.html">全部</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">自己</a>
+                </li>
+            </ul>
+
+            <!--右边状态栏-->
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" data-refresh="刷新" title="刷新"><i class="fa fa-refresh"></i></a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" data-clear="清理" class="layuimini-clear" title="清理"><i
+                            class="fa fa-trash-o"></i></a>
+                </li>
+                <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" data-check-screen="full" title="全屏"><i class="fa fa-arrows-alt"></i></a>
+                </li>
+
+                <li class="layui-nav-item">
+                    <a class="connect-state" href="">离线<span class="layui-badge-dot"></span></a>
+                </li>
+                <li class="layui-nav-item" lay-unselect="">
+                    <a href="javascript:;">
+                        <img :src="url(info.head_img)" class="layui-nav-img">
+                        <cite class="adminName" :title="getName()">{{getName()}}</cite>
+                        <span class="layui-nav-more"></span>
+                    </a>
+
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" lay-submit="" data-open="view/user/index" data-title="修改信息">修改信息</a>
+                        </dd>
+                        <hr>
+                        <dd style="text-align: center;"><a href="javascript:;">退出</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">VIP<span class="layui-badge">{{info.vip}}</span></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="layuimini-container">
+            <div class="layuimini-main">
+
+                <div class="layui-row layui-col-space15">
+
+                    <div class="room hide">
+
+                        <div>
+                            <button class="layui-btn" lay-submit="" data-open="view/room/add"
+                                data-title="配置">创建房间</button>
+                        </div>
+
+                        <div class="room-ul">
+                            <ul>
+                                <li></li>
+                            </ul>
+                        </div>
+
+                        <table id="currentTable" class="layui-table"></table>
+                        <script type="text/html" id="barDemo">
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                            <a class="layui-btn layui-btn-xs" lay-event="more">更多 <i class="layui-icon layui-icon-down"></i></a>
+                        </script>
+
+                    </div>
+
+                    <div class="room_content hide">
+                        <div>
+                            <ul class="mess_contnet">
+                                <li class="mcnt_state">....</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <textarea id="msg" rows="10" cols="100"></textarea>
+                            <button type="submit" class="sendMsg">发送</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="./plugs/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="./plugs/layui-v2.5.6/layui.js" charset="utf-8"></script>
+    <script src="./plugs/fast-main/fast-main.js" charset="utf-8"></script>
+    <script src="./plugs/vue-2.6.10/vue.min.js" charset="utf-8"></script>
+    <script src="./js/index.js" charset="utf-8"></script>
+    <script>
+        var home_vue;
+
+        // 等页面加载完毕后执行
+        $(document).ready(function () {
+
+            if (!window.WebSocket) {
+
+                alert('抱歉您的浏览器不支持WebSocket!');
+                return;
+            }
+
+            /*初始化vue*/
+            home_vue = new Vue({
+                el: '.layui-layout-admin',
+                data: {
+                    info: {
+                        id: '-',
+                        vip: 0,
+                        name: '-',
+                        head_img: 'head1.jpg',
+                    },
+                    prefix_scr: './images/heads/',
+                },
+                methods: {
+                    url: function (url) {
+                        return this.prefix_scr + url;
+                    },
+                    getName: function () {
+
+                        if (this.info.name) {
+
+                            return this.info.name;
+                        }
+
+                        return this.info.id;
+                    },
+                }
+            });
+
+            layui.use(['layer', 'form', 'table', 'element'], function () {
+                var layer = layui.layer,
+                    miniAdmin = layui.miniAdmin;
+
+                // 传入Vue
+                main.modules.vue = home_vue;
+
+                // 传入Layui
+                main.modules.layui = layui;
+
+                // 检查是否登陆
+                if (!main.api.isLogin()) {
+
+                    // 生成随机验证码
+                    window.location.href = '/index.html?token=' + main.api.randToken(6);
+                    return false;
+                }
+
+                // 执行主控制器，主入口
+                main.index();
+
+                // 执行页面监听
+                mini.listen();
+
+                // 初始化音频
+                main.audio.init(['receive']);
+            });
+        });
+
+        var getUserInfo = function () {
+            
+            return home_vue.info;
+        }
+    </script>
+</body>
+
+</html>

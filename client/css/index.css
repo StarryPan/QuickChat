@@ -1,0 +1,21 @@
+.kuang {
+    text-align: contenter;
+    margin-top: 200px;
+}
+
+#mess {
+    text-align: contenter
+}
+
+.value {
+    width: 200px;
+    height: 200px;
+    border: 1px solid;
+    text-align: contenter;
+    line-height: 200px;
+    display: inline-block;
+}
+
+.hide {
+    display: none;
+}

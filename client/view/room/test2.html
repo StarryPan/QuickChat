@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*基础样式*/
+        .topContainer {
+            border-radius: 5px;
+            border: 2px solid #ccc;
+            height: 500px;
+            padding: 10px;
+        }
+
+        #leftDemo,
+        #rightDemo {
+            width: 400px;
+            display: inline-block;
+            margin: 30px auto 30px 200px;
+        }
+
+        #rightDemo {
+            /* float: right; */
+            margin: 30px 200px 0 0;
+        }
+
+        .outContainer {
+            position: relative;
+        }
+
+        .outContainer:not(:first-child) {
+            margin-top: 20px;
+        }
+
+        /* 消息框通用样式*/
+        .messInRight {
+            text-align: right;
+        }
+
+        .left,
+        .right,
+        .faceImg {
+            display: inline-block;
+        }
+
+        .left {
+            width: 32px;
+            top: 0;
+        }
+
+        .right {
+            margin-left: 15px;
+        }
+
+        .faceImg {
+            position: absolute;
+            top: 0;
+        }
+
+        .faceImgInRight {
+            right: -5px;
+        }
+
+        .messContent {
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .contentDetail {
+            display: inline-block;
+            background-color: #00FF7F;
+            padding: 5px 12px;
+            border-radius: 15px;
+        }
+
+
+        .contentDetail:not(:first-child) {
+            margin-top: 2px;
+        }
+
+        .contentDetail:first-child {
+            border-bottom-left-radius: 0;
+        }
+
+        .contentDetail:last-child {
+            border-bottom-left-radius: 15px;
+            border-top-left-radius: 0;
+        }
+
+        .contentDetail:not(:first-child):not(:last-child) {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+
+
+        /*右侧消息框样式*/
+        .messInRight .contentDetail:first-child {
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 0;
+        }
+
+        .messInRight .contentDetail:last-child {
+            border-bottom-left-radius: 15px;
+            border-top-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            border-top-right-radius: 0;
+        }
+
+        .messInRight .contentDetail:not(:first-child):not(:last-child) {
+            border-radius: 0;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+
+        .contentDetail:first-child:last-child {
+            border-radius: 15px;
+        }
+
+        .faceImg img {
+            width: 32px;
+            border-radius: 16px;
+        }
+
+        /*小表情样式*/
+        .smile1 {
+            background: url('emoji.jpg') no-repeat;
+            width: 14px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: -2px;
+            margin-left: 2px;
+        }
+
+        /*background-position 可根据小表情在大图的位置中对应做调整*/
+        .smile2 {
+            background: url('emoji.jpg') no-repeat;
+            background-position: -32px -16px;
+            width: 14px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: -2px;
+            margin-left: 2px;
+        }
+
+        .smile3 {
+            background: url('emoji.jpg') no-repeat;
+            background-position: -16px 0;
+            width: 14px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: -2px;
+            margin-left: 2px;
+        }
+
+        .smile4 {
+            background: url('emoji.jpg') no-repeat;
+            background-position: -16px -16px;
+            width: 14px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: -2px;
+            margin-left: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="rightDemo">
+        json版
+        <div class="topContainer"></div>
+    </div>
+
+    <script src="../../plugs/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="../../plugs/layui-v2.5.6/layui.js" charset="utf-8"></script>
+    <script src="../../plugs/fast-main/fast-main.js" charset="utf-8"></script>
+    <script>
+
+        // 第二升级版:使用json（即页面右侧）
+        function loadRight() {
+            // touxiang 表示头像链接  
+            // content 表示消息框内容 mess消息内容 littleEmo表示小表情对应的class
+            // isMe 表示是否自己发的('Y' 是)  也就是消息框在右边
+            var jsonData = [
+                { "touxiang": "touxiang1.jpg", "content": [{ "mess": "hello 我是大蓝", "littleEmo": "smile1" }, { "mess": "请大家多指教哇", "littleEmo": "smile2" }, { "mess": "嘻嘻嘻", "littleEmo": "smile4" }] },
+                { "touxiang": "touxiang2.jpeg", "content": [{ "mess": "哇塞塞，欢迎欢迎~" }, { "mess": "我是小灰哦", "littleEmo": "smile2" }], "isMe": "Y" },
+                { "touxiang": "touxiang3.jpg", "content": [{ "mess": "热烈欢迎加入越秃越强大家庭！！！" }] },
+                { "touxiang": "touxiang2.jpeg", "content": [{ "mess": "哈哈哈~" }, { "mess": "加油干，小可爱们" }], "isMe": "Y" }
+            ];
+
+            var tplHtl = ``;
+            $(jsonData).each(function (index, messEle) {
+                if (messEle.isMe !== 'Y') {
+                    tplHtl += `<div class="outContainer">
+          <div class="left"> 
+            <div class="faceImg">
+              <img src="${messEle.touxiang}"/>
+            </div>
+          </div>
+          <div class="right">
+            <div class="messContent">`;
+                    $(messEle.content).each(function (ind, ele) {
+                        if (ind > 0) {
+                            tplHtl += `<br>`;
+                        }
+                        tplHtl += `<span class="contentDetail">${ele.mess}`;
+                        if (ele.littleEmo) {
+                            tplHtl += `<span class="${ele.littleEmo}"></span>`;
+                        }
+                        tplHtl += `</span>`;
+                    });
+                    tplHtl += `</div></div></div>`;
+                } else {
+                    tplHtl += `<div class="outContainer messInRight">
+          <div class="right">
+            <div class="messContent">`;
+                    $(messEle.content).each(function (ind, ele) {
+                        if (ind > 0) {
+                            tplHtl += `<br>`;
+                        }
+                        tplHtl += `<span class="contentDetail">${ele.mess}`;
+                        if (ele.littleEmo) {
+                            tplHtl += `<span class="${ele.littleEmo}"></span>`;
+                        }
+                        tplHtl += `</span>`;
+                    });
+                    tplHtl += `</div></div>
+            <div class="left"> 
+              <div class="faceImg faceImgInRight">
+                <img src="${messEle.touxiang}"/>
+              </div>
+            </div>
+          </div>`;
+                }
+            });
+            $('#rightDemo .topContainer').html(tplHtl);
+        }
+
+        loadRight();
+    </script>
+</body>
+
+</html>

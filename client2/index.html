@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)http://v.bootstrapmb.com/2021/1/rft279457/ -->
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Quickchat UI Themes</title>
+
+    <!-- <link rel="stylesheet" href="./css/public.css" media="all"> -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./plugs/layui-v2.5.6/css/layui.css">
+    <script>
+        window.CONFIG = {
+            WS_HOST: 'ws://127.0.0.1:9002',
+            CDN_HOST: 'http://127.0.0.1:8081'
+        };
+    </script>
+</head>
+
+<body data-theme="indigo">
+
+    <input id="file-upload" class="hide" type="file" name="picture" />
+
+    <div class="app-container-404 hide">
+        <iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0"
+            src="./templates/404/index.html"></iframe>
+    </div>
+
+    <div class="app-container hide">
+
+        <!-- 左边，列表 -->
+        <div class="app-left center">
+            <div class="app-left-header">
+                <div class="app-logo">
+                    <svg viewBox="0 0 512 512">
+                        <defs></defs>
+                        <path class="path-1" fill="#3eb798"
+                            d="M448 193.108h-32v80c0 44.176-35.824 80-80 80H192v32c0 35.344 28.656 64 64 64h96l69.76 58.08c6.784 5.648 16.88 4.736 22.528-2.048A16.035 16.035 0 00448 494.868v-45.76c35.344 0 64-28.656 64-64v-128c0-35.344-28.656-64-64-64z"
+                            opacity=".4"></path>
+                        <path class="path-2" fill="#3eb798"
+                            d="M320 1.108H64c-35.344 0-64 28.656-64 64v192c0 35.344 28.656 64 64 64v61.28c0 8.832 7.168 16 16 16a16 16 0 0010.4-3.84l85.6-73.44h144c35.344 0 64-28.656 64-64v-192c0-35.344-28.656-64-64-64zm-201.44 182.56a22.555 22.555 0 01-4.8 4 35.515 35.515 0 01-5.44 3.04 42.555 42.555 0 01-6.08 1.76 28.204 28.204 0 01-6.24.64c-17.68 0-32-14.32-32-32-.336-17.664 13.712-32.272 31.376-32.608 2.304-.048 4.608.16 6.864.608a42.555 42.555 0 016.08 1.76c1.936.8 3.76 1.808 5.44 3.04a27.78 27.78 0 014.8 3.84 32.028 32.028 0 019.44 23.36 31.935 31.935 0 01-9.44 22.56zm96 0a31.935 31.935 0 01-22.56 9.44c-2.08.24-4.16.24-6.24 0a42.555 42.555 0 01-6.08-1.76 35.515 35.515 0 01-5.44-3.04 29.053 29.053 0 01-4.96-4 32.006 32.006 0 01-9.28-23.2 27.13 27.13 0 010-6.24 42.555 42.555 0 011.76-6.08c.8-1.936 1.808-3.76 3.04-5.44a37.305 37.305 0 013.84-4.96 37.305 37.305 0 014.96-3.84 25.881 25.881 0 015.44-3.04 42.017 42.017 0 016.72-2.4c17.328-3.456 34.176 7.808 37.632 25.136.448 2.256.656 4.56.608 6.864 0 8.448-3.328 16.56-9.28 22.56h-.16zm96 0a22.555 22.555 0 01-4.8 4 35.515 35.515 0 01-5.44 3.04 42.555 42.555 0 01-6.08 1.76 28.204 28.204 0 01-6.24.64c-17.68 0-32-14.32-32-32-.336-17.664 13.712-32.272 31.376-32.608 2.304-.048 4.608.16 6.864.608a42.555 42.555 0 016.08 1.76c1.936.8 3.76 1.808 5.44 3.04a27.78 27.78 0 014.8 3.84 32.028 32.028 0 019.44 23.36 31.935 31.935 0 01-9.44 22.56z">
+                        </path>
+                    </svg>
+                </div>
+                <h1>QuickChat</h1>
+            </div>
+
+            <div class="app-profile-box">
+                <img class="grey" id="userHead" :src="headSrc(myinfo.head)" alt="profile">
+                <div class="app-profile-box-name">
+                    {{myinfo.name}}
+                    <button class="app-setting" lay-submit="" data-open="view/user/index" data-title="修改信息">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" class="feather feather-settings"
+                            viewBox="0 0 24 24">
+                            <defs></defs>
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+                <p class="app-profile-box-title">UID: {{myinfo.id}}</p>
+                <div class="switch-status">
+                    <input type="checkbox" name="switchStatus" id="switchStatus" checked="">
+                    <label class="label-toggle" for="switchStatus"></label>
+                    <span class="toggle-text toggle-online">在线</span>
+                    <span class="toggle-text toggle-offline">离线</span>
+                </div>
+            </div>
+
+            <div class="chat-list-wrapper">
+                <div class="chat-list-header">
+                    聊天
+                    <span class="c-number">{{chat.dot}}</span>
+                    <svg class="list-header-arrow" width="16" height="16" fill="none" stroke="currentColor"
+                        stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewBox="0 0 24 24">
+                        <defs></defs>
+                        <path d="M18 15l-6-6-6 6"></path>
+                    </svg>
+                </div>
+                <ul class="chat-list active">
+                    <!-- active -->
+                    <li :class="chatItemClass(val)" v-for="(val, idx) in chat.list" :data-id="val.id"
+                        :data-chatid="val.chat_id">
+                        <span v-if="val.dot" class="c-number">{{val.dot}}</span>
+                        <img :class="imageClass(val)" :src="headSrc(val.head)" alt="chat">
+                        <span class="chat-list-name">{{val.name}}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="chat-list-wrapper">
+                <div class="chat-list-header active">
+                    在线
+                    <span class="c-number">{{world.dot}}</span>
+                    <svg class="list-header-arrow" width="16" height="16" fill="none" stroke="currentColor"
+                        stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewBox="0 0 24 24">
+                        <defs></defs>
+                        <path d="M18 15l-6-6-6 6"></path>
+                    </svg>
+                </div>
+                <ul class="chat-list">
+                    <!-- active -->
+                    <li class="chat-list-item" v-for="(val, idx) in world.list" :data-id="val.id"
+                        :data-chatid="val.chat_id">
+                        <img :src="headSrc(val.head)" alt="chat">
+                        <span class="chat-list-name">{{val.name}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 中间，聊天内容 -->
+        <div v-if="chat.user.id" class="app-main">
+
+            <div class="chat-wrapper-nav">
+                <div class="chat-wrapper-back" title="返回">
+                    <i class="layui-icon layui-anim layui-anim-rotate layui-icon-left"></i>
+                </div>
+                <div style="margin: auto;">{{chat.user.name}}</div>
+                <div class="chat-more" title="更多信息">
+                    <i class="layui-icon layui-anim layui-icon-more"></i>
+                </div>
+            </div>
+
+            <div class="message-loading">
+                <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-icon-loading"></i>
+            </div>
+
+            <div class="chat-wrapper chat-message">
+
+                <!-- 初始消息提示 -->
+                <div class="message-wrapper">
+                    <div class="message-box-wrapper" style="margin: auto;opacity: 0.5;">
+                        <div class="message-box">
+                            您已加入 {{chat.user.name}}，现在可以开始聊天了。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 遍历聊天消息内容 -->
+                <template v-for="(val, idx) in chat.mess">
+
+                    <!-- 主消息样式 -->
+                    <div :class="messageWrapperClass(val)">
+                        <img :class="messageImageClass(val)" :src="getChatHead(val)" alt="profile-pic"
+                            :title="val.online ? '在线': '离线'">
+                        <div class="message-box-wrapper">
+                            <!-- <div class="message-name">{{getName()}}</div> -->
+                            <div v-if="val.msg_type == 1" class="message-box">
+                                {{val.content}}
+                            </div>
+                            <div v-if="val.msg_type == 7" class="message-box" style="padding: 0;">
+                                <img :src="val.content" data-image="" style="max-width: 150px;max-height: 150px;">
+                            </div>
+                            <span>{{getDateDiff(val.create_time)}}</span>
+                        </div>
+                    </div>
+
+                </template>
+            </div>
+
+
+            <div class="chat-input-box chat-message">
+
+                <!-- <div class="chat-input-face" type="tips" times="8" showtime="0" contype="object">
+                    <div style="padding: 0; background-color: none;">
+                        <ul class="chat-input-clear"
+                            style="border: 1px solid var(--box-border);border-radius: 6px;background-color: var(--chat-input);">
+                            <li title="[微笑]"><img src="http://127.0.0.1:8102/plugs/layui-v2.5.6/images/face/0.gif"
+                                    alt="[微笑]">
+                            </li>
+                            <li title="[嘻嘻]"><img src="http://127.0.0.1:8102/plugs/layui-v2.5.6/images/face/1.gif"
+                                    alt="[嘻嘻]">
+                            </li>
+                            <li title="[哈哈]"><img src="http://127.0.0.1:8102/plugs/layui-v2.5.6/images/face/2.gif"
+                                    alt="[哈哈]">
+                            </li>
+                            <li title="[可爱]"><img src="http://127.0.0.1:8102/plugs/layui-v2.5.6/images/face/3.gif"
+                                    alt="[可爱]">
+                            </li>
+                            <li title="[可怜]"><img src="http://127.0.0.1:8102/plugs/layui-v2.5.6/images/face/4.gif"
+                                    alt="[可怜]">
+                            </li>
+                        </ul><i class="layui-layer-TipsG layui-layer-TipsB"></i>
+                    </div><span class="layui-layer-setwin"></span>
+                </div> -->
+
+                <div class="chat-input-wrapper">
+                    <a class="chat-attachment-btn">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" class="feather feather-paperclip"
+                            viewBox="0 0 24 24">
+                            <defs></defs>
+                            <path
+                                d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48">
+                            </path>
+                        </svg>
+                    </a>
+                    <div class="input-wrapper">
+                        <input type="text" class="chat-input" placeholder="在这里输入您的信息" @keyup.enter="buttonSendMessage">
+                        <button class="emoji-btn">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" class="feather feather-smile"
+                                viewBox="0 0 24 24">
+                                <defs></defs>
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"></path>
+                            </svg>
+                        </button>
+
+
+                    </div>
+                    <button class="chat-send-btn" @click="buttonSendMessage">发送</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 右边，用户信息 -->
+        <div v-if="chat.user.id" class="app-right">
+
+            <div class="app-profile-img">
+                <span class="app-right-close chat-more" title="关闭">
+                    <i class="layui-icon layui-anim layui-icon-close"></i>
+                </span>
+                <!-- 头像 -->
+                <img :src="headSrc(chat.user.head)" alt="profile">
+            </div>
+
+            <div class="app-profile-box">
+                <!-- 头像 -->
+                <div class="app-profile-box-title name"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-user">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>{{chat.user.name}}
+                </div>
+
+                <p class="app-profile-box-title mail"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-mail">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>{{chat.user.email}}</p>
+                <!-- <button class="archive-btn">Archive<svg width="16" height="16" fill="none" stroke="currentColor"
+                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-archive"
+                        viewBox="0 0 24 24">
+                        <defs></defs>
+                        <path d="M21 8v13H3V8M1 3h22v5H1zM10 12h4"></path>
+                    </svg></button> -->
+
+                <hr />
+                <p class="app-profile-box-title">个性签名: {{chat.user.remark}}</p>
+            </div>
+
+            <div class="app-activity-box">
+                <div class="activity-info-boxes">
+                    <div class="activity-info-box time">
+                        <div class="info-icon-wrapper">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" class="feather feather-clock"
+                                viewBox="0 0 24 24">
+                                <defs></defs>
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 6v6l4 2"></path>
+                            </svg>
+                        </div>
+                        <div class="info-text-wrapper">
+                            <span class="info-text-upper">13h</span>
+                            <span class="info-text-bottom">Time</span>
+                        </div>
+                    </div>
+                    <div class="activity-info-box atendee">
+                        <div class="info-icon-wrapper">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" class="feather feather-users"
+                                viewBox="0 0 24 24">
+                                <defs></defs>
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path>
+                            </svg>
+                        </div>
+                        <div class="info-text-wrapper">
+                            <span class="info-text-upper">32</span>
+                            <span class="info-text-bottom">Atendeed</span>
+                        </div>
+                    </div>
+                    <div class="activity-info-box meeting">
+                        <div class="info-icon-wrapper">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" class="feather feather-calendar"
+                                viewBox="0 0 24 24">
+                                <defs></defs>
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                <path d="M16 2v4M8 2v4M3 10h18"></path>
+                            </svg>
+                        </div>
+                        <div class="info-text-wrapper">
+                            <span class="info-text-upper">122</span>
+                            <span class="info-text-bottom">Meetings</span>
+                        </div>
+                    </div>
+                    <div class="activity-info-box reject">
+                        <div class="info-icon-wrapper">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" class="feather feather-x-square"
+                                viewBox="0 0 24 24">
+                                <defs></defs>
+                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                                <path d="M9 9l6 6M15 9l-6 6"></path>
+                            </svg>
+                        </div>
+                        <div class="info-text-wrapper">
+                            <span class="info-text-upper">12</span>
+                            <span class="info-text-bottom">Rejected</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-info-header">
+                    <span class="info-header-bold">Current Week</span>
+                    <span class="info-header-light">Activity</span>
+                </div>
+                <div class="activity-days-wrapper">
+                    <div class="day">
+                        <div class="chart"></div>
+                        <span>MON</span>
+                    </div>
+                    <div class="day">
+                        <div class="chart"></div>
+                        <span>TUE</span>
+                    </div>
+                    <div class="day current">
+                        <div class="chart"></div>
+                        <span>WED</span>
+                    </div>
+                    <div class="day">
+                        <div class="chart"></div>
+                        <span>THU</span>
+                    </div>
+                    <div class="day">
+                        <div class="chart"></div>
+                        <span>FRI</span>
+                    </div>
+                    <div class="day">
+                        <div class="chart"></div>
+                        <span>SAT</span>
+                    </div>
+                    <div class="day">
+                        <div class="chart"></div>
+                        <span>SUN</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="app-right-bottom">
+                <div class="app-theme-selector">
+                    <button class="theme-color indigo active" data-color="indigo">
+                        <svg width="512" height="512" viewBox="0 0 512 512" title="Indigo">
+                            <defs></defs>
+                            <path fill="#fff"
+                                d="M451.648.356c-25.777 2.712-56.79 19.872-94.811 52.46-68.786 58.958-149.927 160.756-202.185 234-38.158-5.951-78.375 10.368-102.187 40.133C8.758 381.584 45.347 430.34 4.12 473.811c-7.179 7.569-4.618 20.005 4.98 24.114 67.447 28.876 153.664 10.879 194.109-31.768 24.718-26.063 38.167-64.54 31.411-100.762 72.281-55.462 172.147-140.956 228.7-211.885 31.316-39.277 47.208-70.872 48.584-96.59C513.759 22.273 486.87-3.346 451.648.356zM181.443 445.511c-27.362 28.85-87.899 45.654-141.767 31.287 30.12-48.043 4.229-91.124 36.214-131.106 26.246-32.808 79.034-41.993 109.709-11.317 35.839 35.843 19.145 86.566-4.156 111.136zm3.07-148.841c7.354-10.167 18.887-25.865 33.29-44.659l49.22 49.224c-18.125 14.906-33.263 26.86-43.077 34.494-8.842-15.879-22.526-30.108-39.433-39.059zM481.948 55.316c-3.368 63.004-143.842 186.021-191.797 226.621l-53.785-53.79c39.458-49.96 155.261-191.312 218.422-197.954 16.851-1.775 28.03 8.858 27.16 25.123z">
+                            </path>
+                        </svg>
+                    </button>
+                    <button class="theme-color pink" data-color="pink" title="Pink">
+                        <svg width="512" height="512" viewBox="0 0 512 512">
+                            <defs></defs>
+                            <path fill="#fff"
+                                d="M451.648.356c-25.777 2.712-56.79 19.872-94.811 52.46-68.786 58.958-149.927 160.756-202.185 234-38.158-5.951-78.375 10.368-102.187 40.133C8.758 381.584 45.347 430.34 4.12 473.811c-7.179 7.569-4.618 20.005 4.98 24.114 67.447 28.876 153.664 10.879 194.109-31.768 24.718-26.063 38.167-64.54 31.411-100.762 72.281-55.462 172.147-140.956 228.7-211.885 31.316-39.277 47.208-70.872 48.584-96.59C513.759 22.273 486.87-3.346 451.648.356zM181.443 445.511c-27.362 28.85-87.899 45.654-141.767 31.287 30.12-48.043 4.229-91.124 36.214-131.106 26.246-32.808 79.034-41.993 109.709-11.317 35.839 35.843 19.145 86.566-4.156 111.136zm3.07-148.841c7.354-10.167 18.887-25.865 33.29-44.659l49.22 49.224c-18.125 14.906-33.263 26.86-43.077 34.494-8.842-15.879-22.526-30.108-39.433-39.059zM481.948 55.316c-3.368 63.004-143.842 186.021-191.797 226.621l-53.785-53.79c39.458-49.96 155.261-191.312 218.422-197.954 16.851-1.775 28.03 8.858 27.16 25.123z">
+                            </path>
+                        </svg>
+                    </button>
+                    <button class="theme-color navy-dark active" data-color="navy-dark" title="Navy Dark">
+                        <svg width="512" height="512" viewBox="0 0 512 512">
+                            <defs></defs>
+                            <path fill="#fff"
+                                d="M451.648.356c-25.777 2.712-56.79 19.872-94.811 52.46-68.786 58.958-149.927 160.756-202.185 234-38.158-5.951-78.375 10.368-102.187 40.133C8.758 381.584 45.347 430.34 4.12 473.811c-7.179 7.569-4.618 20.005 4.98 24.114 67.447 28.876 153.664 10.879 194.109-31.768 24.718-26.063 38.167-64.54 31.411-100.762 72.281-55.462 172.147-140.956 228.7-211.885 31.316-39.277 47.208-70.872 48.584-96.59C513.759 22.273 486.87-3.346 451.648.356zM181.443 445.511c-27.362 28.85-87.899 45.654-141.767 31.287 30.12-48.043 4.229-91.124 36.214-131.106 26.246-32.808 79.034-41.993 109.709-11.317 35.839 35.843 19.145 86.566-4.156 111.136zm3.07-148.841c7.354-10.167 18.887-25.865 33.29-44.659l49.22 49.224c-18.125 14.906-33.263 26.86-43.077 34.494-8.842-15.879-22.526-30.108-39.433-39.059zM481.948 55.316c-3.368 63.004-143.842 186.021-191.797 226.621l-53.785-53.79c39.458-49.96 155.261-191.312 218.422-197.954 16.851-1.775 28.03 8.858 27.16 25.123z">
+                            </path>
+                        </svg>
+                    </button>
+                    <button class="theme-color dark" data-color="dark" title="Dark">
+                        <svg width="512" height="512" viewBox="0 0 512 512">
+                            <defs></defs>
+                            <path fill="currentColor"
+                                d="M451.648.356c-25.777 2.712-56.79 19.872-94.811 52.46-68.786 58.958-149.927 160.756-202.185 234-38.158-5.951-78.375 10.368-102.187 40.133C8.758 381.584 45.347 430.34 4.12 473.811c-7.179 7.569-4.618 20.005 4.98 24.114 67.447 28.876 153.664 10.879 194.109-31.768 24.718-26.063 38.167-64.54 31.411-100.762 72.281-55.462 172.147-140.956 228.7-211.885 31.316-39.277 47.208-70.872 48.584-96.59C513.759 22.273 486.87-3.346 451.648.356zM181.443 445.511c-27.362 28.85-87.899 45.654-141.767 31.287 30.12-48.043 4.229-91.124 36.214-131.106 26.246-32.808 79.034-41.993 109.709-11.317 35.839 35.843 19.145 86.566-4.156 111.136zm3.07-148.841c7.354-10.167 18.887-25.865 33.29-44.659l49.22 49.224c-18.125 14.906-33.263 26.86-43.077 34.494-8.842-15.879-22.526-30.108-39.433-39.059zM481.948 55.316c-3.368 63.004-143.842 186.021-191.797 226.621l-53.785-53.79c39.458-49.96 155.261-191.312 218.422-197.954 16.851-1.775 28.03 8.858 27.16 25.123z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右边，颜色按钮 -->
+        <div class="app-right-bottom">
+            <div class="app-theme-selector">
+                <button class="theme-color indigo active" data-color="indigo" title="Indigo">
+                    <svg width="512" height="512" viewBox="0 0 512 512">
+                        <defs></defs>
+                        <path fill="#fff"
+                            d="M451.648.356c-25.777 2.712-56.79 19.872-94.811 52.46-68.786 58.958-149.927 160.756-202.185 234-38.158-5.951-78.375 10.368-102.187 40.133C8.758 381.584 45.347 430.34 4.12 473.811c-7.179 7.569-4.618 20.005 4.98 24.114 67.447 28.876 153.664 10.879 194.109-31.768 24.718-26.063 38.167-64.54 31.411-100.762 72.281-55.462 172.147-140.956 228.7-211.885 31.316-39.277 47.208-70.872 48.584-96.59C513.759 22.273 486.87-3.346 451.648.356zM181.443 445.511c-27.362 28.85-87.899 45.654-141.767 31.287 30.12-48.043 4.229-91.124 36.214-131.106 26.246-32.808 79.034-41.993 109.709-11.317 35.839 35.843 19.145 86.566-4.156 111.136zm3.07-148.841c7.354-10.167 18.887-25.865 33.29-44.659l49.22 49.224c-18.125 14.906-33.263 26.86-43.077 34.494-8.842-15.879-22.526-30.108-39.433-39.059zM481.948 55.316c-3.368 63.004-143.842 186.021-191.797 226.621l-53.785-53.79c39.458-49.96 155.261-191.312 218.422-197.954 16.851-1.775 28.03 8.858 27.16 25.123z">
+                        </path>
+                    </svg>
+                </button>
+                <button class="theme-color pink" data-color="pink" title="Pink">
+                    <svg width="512" height="512" viewBox="0 0 512 512">
+                        <defs></defs>
+                        <path fill="#fff"
+                            d="M451.648.356c-25.777 2.712-56.79 19.872-94.811 52.46-68.786 58.958-149.927 160.756-202.185 234-38.158-5.951-78.375 10.368-102.187 40.133C8.758 381.584 45.347 430.34 4.12 473.811c-7.179 7.569-4.618 20.005 4.98 24.114 67.447 28.876 153.664 10.879 194.109-31.768 24.718-26.063 38.167-64.54 31.411-100.762 72.281-55.462 172.147-140.956 228.7-211.885 31.316-39.277 47.208-70.872 48.584-96.59C513.759 22.273 486.87-3.346 451.648.356zM181.443 445.511c-27.362 28.85-87.899 45.654-141.767 31.287 30.12-48.043 4.229-91.124 36.214-131.106 26.246-32.808 79.034-41.993 109.709-11.317 35.839 35.843 19.145 86.566-4.156 111.136zm3.07-148.841c7.354-10.167 18.887-25.865 33.29-44.659l49.22 49.224c-18.125 14.906-33.263 26.86-43.077 34.494-8.842-15.879-22.526-30.108-39.433-39.059zM481.948 55.316c-3.368 63.004-143.842 186.021-191.797 226.621l-53.785-53.79c39.458-49.96 155.261-191.312 218.422-197.954 16.851-1.775 28.03 8.858 27.16 25.123z">
+                        </path>
+                    </svg>
+                </button>
+                <button class="theme-color navy-dark" data-color="navy-dark" title="Navy Dark">
+                    <svg width="512" height="512" viewBox="0 0 512 512">
+                        <defs></defs>
+                        <path fill="#fff"
+                            d="M451.648.356c-25.777 2.712-56.79 19.872-94.811 52.46-68.786 58.958-149.927 160.756-202.185 234-38.158-5.951-78.375 10.368-102.187 40.133C8.758 381.584 45.347 430.34 4.12 473.811c-7.179 7.569-4.618 20.005 4.98 24.114 67.447 28.876 153.664 10.879 194.109-31.768 24.718-26.063 38.167-64.54 31.411-100.762 72.281-55.462 172.147-140.956 228.7-211.885 31.316-39.277 47.208-70.872 48.584-96.59C513.759 22.273 486.87-3.346 451.648.356zM181.443 445.511c-27.362 28.85-87.899 45.654-141.767 31.287 30.12-48.043 4.229-91.124 36.214-131.106 26.246-32.808 79.034-41.993 109.709-11.317 35.839 35.843 19.145 86.566-4.156 111.136zm3.07-148.841c7.354-10.167 18.887-25.865 33.29-44.659l49.22 49.224c-18.125 14.906-33.263 26.86-43.077 34.494-8.842-15.879-22.526-30.108-39.433-39.059zM481.948 55.316c-3.368 63.004-143.842 186.021-191.797 226.621l-53.785-53.79c39.458-49.96 155.261-191.312 218.422-197.954 16.851-1.775 28.03 8.858 27.16 25.123z">
+                        </path>
+                    </svg>
+                </button>
+                <button class="theme-color dark" data-color="dark" title="Dark">
+                    <svg width="512" height="512" viewBox="0 0 512 512">
+                        <defs></defs>
+                        <path fill="currentColor"
+                            d="M451.648.356c-25.777 2.712-56.79 19.872-94.811 52.46-68.786 58.958-149.927 160.756-202.185 234-38.158-5.951-78.375 10.368-102.187 40.133C8.758 381.584 45.347 430.34 4.12 473.811c-7.179 7.569-4.618 20.005 4.98 24.114 67.447 28.876 153.664 10.879 194.109-31.768 24.718-26.063 38.167-64.54 31.411-100.762 72.281-55.462 172.147-140.956 228.7-211.885 31.316-39.277 47.208-70.872 48.584-96.59C513.759 22.273 486.87-3.346 451.648.356zM181.443 445.511c-27.362 28.85-87.899 45.654-141.767 31.287 30.12-48.043 4.229-91.124 36.214-131.106 26.246-32.808 79.034-41.993 109.709-11.317 35.839 35.843 19.145 86.566-4.156 111.136zm3.07-148.841c7.354-10.167 18.887-25.865 33.29-44.659l49.22 49.224c-18.125 14.906-33.263 26.86-43.077 34.494-8.842-15.879-22.526-30.108-39.433-39.059zM481.948 55.316c-3.368 63.004-143.842 186.021-191.797 226.621l-53.785-53.79c39.458-49.96 155.261-191.312 218.422-197.954 16.851-1.775 28.03 8.858 27.16 25.123z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="./plugs/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./plugs/layui-v2.5.6/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./plugs/fast-main/fast-main.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./plugs/vue-2.6.10/vue.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        /*初始化vue*/
+        var home_vue = new Vue({
+            el: '.app-container',
+            data: {
+                chat: {
+                    dot: 0,
+                    list: {},
+                    user: {},
+                    mess: [],
+                },
+                world: {
+                    dot: 0,
+                    list: {},
+                },
+                myinfo: {
+                    id: '-',
+                    name: '-',
+                    head: '',
+                },
+                messages: {},
+            },
+            methods: {
+                url: function (url) {
+
+                    return url;
+                },
+
+                headSrc: function (src) {
+
+                    if (!src) {
+
+                        src = './images/heads/default.jpg';
+                    }
+
+                    return src;
+                },
+
+                imageClass: function (val) {
+
+                    return val.online ? '' : 'gray';
+                },
+
+                getChatHead: function (val) {
+
+                    let head = this.myinfo.head;
+
+                    if (val.uid != this.myinfo.id) {
+
+                        head = this.chat.user.head;
+                    }
+
+                    return this.headSrc(head);
+                },
+
+                setChatUser: function (uid) {
+
+                    var self = this;
+
+                    self.chat.list.forEach(val => {
+
+                        if (val.id == uid) {
+
+                            self.chat.user = val;
+                            return false;
+                        }
+                    });
+
+                    if (self.chat.user.id == undefined) {
+
+                        self.world.list.forEach(val => {
+
+                            if (val.id == uid) {
+
+                                self.chat.user = val;
+                                return false;
+                            }
+                        });
+                    }
+
+                    if (self.chat.user.id == undefined) {
+
+                        alert('未找到聊天的对象, uid:' + uid);
+                    }
+                },
+
+                chatItemClass: function (val) {
+
+                    return val.id == this.chat.user.id ? 'chat-list-item active' : 'chat-list-item';
+                },
+
+                messageImageClass: function (val) {
+
+                    let online = (this.myinfo.id == val.uid) ? this.myinfo.online : this.chat.user.online;
+
+                    return (online) ? 'message-pp' : 'message-pp gray';
+                },
+
+                messageWrapperClass: function (val) {
+
+                    return (this.myinfo.id == val.uid) ? 'message-wrapper reverse' : 'message-wrapper';
+                },
+
+                sendMessage: function (content, msg_type = 1) {
+
+                    let self = this;
+                    let chat_uid = self.chat.user.id;
+
+                    // 清除小红点
+                    main.modules.vue.clearChatUserReddot(chat_uid);
+
+                    // 发送消息
+                    main.ws.send('sendMessage', {
+                        content: content,
+                        msg_type: msg_type,
+                        chat_uid: chat_uid,
+                    });
+
+                    let chat_id = self.chat.user.chat_id || -1;
+
+                    let data = {
+                        id: -1,
+                        uid: self.myinfo.id,
+                        state: 0,
+                        chat_id: chat_id,
+                        content: content,
+                        msg_type: msg_type,
+                        online: true,
+                        create_time: (new Date().getTime() / 1000)
+                    };
+
+                    if (chat_id > 0) {
+
+                        if (!main.data.messageData[chat_id]) {
+
+                            main.data.messageData[chat_id] = [];
+                        }
+
+                        main.data.messageData[chat_id].push(data);
+                        main.modules.vue.chat.mess = main.data.messageData[chat_id];
+                    } else {
+
+                        chat_id = 'temp_' + chat_uid;
+
+                        if (!main.data.messageData[chat_id]) {
+
+                            main.data.messageData[chat_id] = [];
+                        }
+
+                        main.data.messageData[chat_id].push(data);
+                        main.modules.vue.chat.mess = main.data.messageData[chat_id];
+                    }
+
+                    // 延时调用，给vue加载时间
+                    setTimeout(() => {
+                        // 回滚到最下方
+                        $(".chat-wrapper").scrollTop($(".chat-wrapper")[0].scrollHeight);
+                    }, 50);
+                },
+
+                buttonSendMessage: function () {
+
+                    let inputWrapper = $('.input-wrapper').find('input');
+                    let input_text = inputWrapper.val();
+
+                    if (input_text == null || input_text == '') {
+
+                        return false;
+                    }
+
+                    console.log('input_text: ', input_text);
+
+                    // 发送消息
+                    this.sendMessage(input_text);
+
+                    // 清空内容
+                    inputWrapper.val('');
+                },
+
+                getDateDiff: function (time, type) {
+                    var minute = 1000 * 60;
+                    var hour = minute * 60;
+                    var day = hour * 24;
+                    var halfamonth = day * 15;
+                    var month = day * 30;
+                    var now = new Date().getTime();
+                    var diffValue = now - (time * 1000);
+                    if (diffValue < 0) {
+                        return;
+                    }
+
+                    var monthC = diffValue / month;
+                    var weekC = diffValue / (7 * day);
+                    var dayC = diffValue / day;
+                    var hourC = diffValue / hour;
+                    var minC = diffValue / minute;
+                    if (monthC >= 1) {
+                        result = "" + parseInt(monthC) + "个月前";
+                    } else if (weekC >= 1) {
+                        result = "" + parseInt(weekC) + "周前";
+                    } else if (dayC >= 1) {
+                        result = "" + parseInt(dayC) + "天前";
+                    } else if (hourC >= 1) {
+                        result = "" + parseInt(hourC) + "后小时前";
+                    } else if (minC >= 1) {
+                        result = "" + parseInt(minC) + "分钟前";
+                    } else
+                        result = "刚刚";
+                    return result;
+                },
+
+                updateChatList: function (data) {
+
+                    this.chat.list = data;
+                    this.chat.dot = this.chat.list.length;
+                },
+
+                updateWorldList: function (data) {
+
+                    this.world.list = data;
+                    this.world.dot = this.world.list.length;
+                },
+
+                addChatUserReddot: function (uid) {
+
+                    let self = this;
+                    let chat_list = self.chat.list;
+
+                    for (const key in chat_list) {
+                        const val = chat_list[key];
+
+                        if (uid == val.id) {
+
+                            self.chat.list[key].dot++;
+                        }
+                    }
+
+                    return true;
+                },
+
+                clearChatUserReddot: function (uid, chat_id) {
+
+                    let self = this;
+                    let chat_list = self.chat.list;
+
+                    for (const key in chat_list) {
+                        const val = chat_list[key];
+
+                        if (uid == val.id) {
+
+                            self.chat.list[key].dot = 0;
+                        }
+                    }
+
+                    // 发送拉取玩家聊天数据
+                    main.ws.send('seeUserMessage', {
+                        uid: uid,
+                        chat_id: chat_id
+                    });
+
+                    return true;
+                },
+
+            }
+        });
+
+        // 等页面加载完毕后执行
+        $(document).ready(function () {
+
+            if (!window.WebSocket) {
+
+                alert('抱歉您的浏览器不支持WebSocket!');
+                return;
+            }
+
+            // 传入Vue
+            main.modules.vue = home_vue;
+
+            // 调用Layui
+            layui.use(['layer', 'upload'], function () {
+
+                // 传入Layui
+                main.modules.layui = layui;
+
+                // 检查是否登陆
+                if (!main.api.isLogin()) {
+
+                    var account = prompt('请输入账号', main.api.randAccount(6));
+
+                    if (!account) {
+
+                        $('.app-container-404').removeClass('hide');
+                        return false;
+                    }
+
+                    if (!main.api.checkAccount(account)) {
+
+                        alert('请输入字母和数字');
+                        $('.app-container-404').removeClass('hide');
+
+                        return false;
+                    }
+
+                    var passward = prompt('请输入密码', '');
+
+                    if (!passward) {
+
+                        $('.app-container-404').removeClass('hide');
+                        return false;
+                    }
+
+                    if (!main.api.checkPassWord(passward)) {
+
+                        alert('请输入字母和数字');
+                        $('.app-container-404').removeClass('hide');
+
+                        return false;
+                    }
+
+                    // 生成随机验证码
+                    window.location.href = '/index.html?account=' + account + '&pass=' + passward;
+                    return false;
+                }
+
+                main.layui.loading();
+
+                // 初始化音频
+                main.audio.init(['receive']);
+
+                // 执行主控制器，主入口
+                main.index(CONFIG);
+            });
+        });
+
+        // 给子级界面的接口
+        var getUserInfo = function () {
+
+            return home_vue.myinfo;
+        }
+    </script>
+</body>
+
+</html>
