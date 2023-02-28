@@ -28,10 +28,10 @@ var server_oo = ws.createServer(function (conn) {
         conn.last_ping = new Date().getTime();
 
         try {
-
-            // console.log('收到的信息为:' + message);
             let msg = JSON.parse(message);
             let cmd = msg.cmd;
+
+            if (cmd != 'ping') console.log('get message:' + message);
 
             switch (cmd) {
                 case 'login':
@@ -122,7 +122,7 @@ var server_oo = ws.createServer(function (conn) {
                     var uid = conn.uid;
                     var data = msg.rs;
                     console.log('updateUser-uid: ', uid);
-                    // console.log('updateUser-data: ', data);
+                    console.log('updateUser-data: ', data);
 
                     if (!data) {
 
@@ -198,7 +198,7 @@ var server_oo = ws.createServer(function (conn) {
                     var chat_uid = msg.rs.chat_uid;
                     var msg_type = msg.rs.msg_type;
                     console.log('sendMessage-uid: ', uid);
-                    console.log('sendMessage-data: ', msg.rs);
+                    // console.log('sendMessage-data: ', msg.rs);
 
                     if (chat_uid == '' || content == null || msg_type == null) {
 

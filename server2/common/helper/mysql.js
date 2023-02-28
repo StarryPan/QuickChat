@@ -32,6 +32,7 @@ var pool = mysql.createPool({
 	connectionLimit: 10,
 	host: config.host,
 	user: config.user,
+	port: config.port,
 	password: config.password,
 	database: config.database,
 });
